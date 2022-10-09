@@ -1,0 +1,13 @@
+{
+    "name": "criss/php-algorithm",
+    "description": "this is a simple algorithm code for phper learning",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Criss\\PhpAlgorithm\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
