@@ -91,19 +91,22 @@ class UnorderedList
      */
     public function remove($target) : bool
     {
-        $temp = $this->head;
+        $temp = $this->head; //查询数据
+        $pre = $this->head; //前面迭代
 
-        if ($this->length == 1 && $temp->getData() == $target) {
-            $this->head = null;
-            $this->length--;
+        //先判断头
+        if ($temp->getData() == $target) {
+            $this->head = $temp->getNext();
             return true;
-        }
-
-        while($temp != null && $temp->getNext() != null) {
-            if ($temp->getNext()->getData() == $target) {
-                $temp->setNext($temp->getNext()->getNext());
-                $this->length--;
-                return true;
+        } else {
+            while ($temp != null) {
+                if ($temp->getData() == $target) {
+                    $pre->setNext($temp->getNext());
+                    $this->length--;
+                    return true;
+                }
+                $pre = $temp;
+                $temp = $temp->getNext();
             }
         }
         return false;
@@ -112,16 +115,15 @@ class UnorderedList
     /**
      * @Description 输出一个链表
      *
-     * @return string|null
      */
-    public function show() : ? string
+    public function show()
     {
         $temp = $this->head;
 
         if ($this->length == 0) {
-            return "链表为空";
+            echo "链表为空";
         } else {
-            $i = 1;
+            $i = 0;
             while ($temp != null) {
                 $str = sprintf("链表第%s个数据为%s\n",$i, $temp->getData());
                 echo $str;
@@ -153,6 +155,7 @@ class UnorderedList
      * @Description 假设元素在链表里面，返回下标
      *
      * @param $item
+     * @return int
      */
     public function index($item) : int
     {
@@ -166,6 +169,7 @@ class UnorderedList
                 $temp = $temp->getNext();
             }
         }
+        return $index;
     }
 
     /**
@@ -177,21 +181,21 @@ class UnorderedList
     public function insert(int $pos, $item)
     {
         $temp = $this->head;
-
-        if ($pos != 0) {
-            for ($i = 0; $i <= $pos; $i++) {
-                $temp = $temp->getNext();
-            }
-        }
+        $pre = $this->head;
 
         $node = new Node($item);
 
-        //判断下一个节点是否为空
-        if ($temp->getNext() == null) {
-            $temp->setNext($node);
+        if ($pos != 0) {
+            for ($i = 0; $i < $pos; $i++) {
+                $pre = $temp;
+                $temp = $temp->getNext();
+            }
+            //判断下一个节点是否为空
+            $node->setNext($temp);
+            $pre->setNext($node);
         } else {
-            $node->setNext($temp->getNext());
-            $temp->setNext($node);
+            $node->setNext($temp);
+            $this->head = $node;
         }
     }
 
@@ -201,12 +205,14 @@ class UnorderedList
     public function pop()
     {
         $temp = $this->head;
+        $pre = $this->head;
 
         while ($temp->getNext() != null) {
+            $pre = $temp;
             $temp = $temp->getNext();
         }
 
-        $temp->setNext(null);
+        $pre->setNext(null);
     }
 
     /**
@@ -216,19 +222,19 @@ class UnorderedList
     public function popByPos($pos)
     {
         $temp = $this->head;
-        $next = $this->head;
+        $pre = $this->head;
 
         if ($pos != 0) {
-            for ($i = 0; $i <= $pos; $i++) {
-                $next = $temp;
+            for ($i = 0; $i < $pos; $i++) {
+                $pre = $temp;
                 $temp = $temp->getNext();
             }
         }
 
         if ($temp->getNext() == null) {
-            $next->setNext(null);
+            $pre->setNext(null);
         } else {
-            $next->setNext($temp->getNext());
+            $pre->setNext($temp->getNext());
         }
     }
 }
