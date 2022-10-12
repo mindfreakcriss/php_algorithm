@@ -88,4 +88,53 @@ class BinaryTree
     {
         return $this->right_child;
     }
+
+    /**
+     * @Description 前序遍历 先访问根节点，然后递归前序遍历左子树，最后递归前序遍历右子树
+     */
+    public function frontShow()
+    {
+        echo $this->getRootVal() . "-->";
+
+        if (!empty($this->getLeftChild())) {
+            $this->getLeftChild()->frontShow();
+        }
+
+        if (!empty($this->getRightChild())) {
+            $this->getRightChild()->frontShow();
+        }
+    }
+
+    /**
+     * @Description 中序遍历，先递归中序遍历左子树，然后访问根节点，最后递归中序遍历右子树
+     */
+    public function middleShow()
+    {
+        if (!empty($this->getLeftChild())) {
+            $this->getLeftChild()->middleShow();
+        }
+
+        echo $this->getRootVal() . "-->";
+
+        if (!empty($this->getRightChild())) {
+            $this->getRightChild()->middleShow();
+        }
+    }
+
+    /**
+     * @Description 后序遍历，先递归后序遍历右子树，然后递归后序遍历左子树，最后访问根节点
+     */
+    public function rearShow()
+    {
+        if (!empty($this->getLeftChild())) {
+            $this->getLeftChild()->rearShow();
+        }
+
+        if (!empty($this->getRightChild())) {
+            $this->getRightChild()->rearShow();
+        }
+
+        echo $this->getRootVal() . "-->";
+    }
+
 }

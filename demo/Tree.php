@@ -8,14 +8,14 @@ $r = new BinaryTree("a");
 
 $r->insertLeft("b");
 
-var_dump($r->getLeftChild()->getRootVal());
-
 $r->insertRight("c");
 
-var_dump($r->getRightChild()->getRootVal());
+$r->frontShow();
 
-$r->getRightChild()->setRootVal("Hello");
+echo "\n";
 
-var_dump($r->getRightChild()->getRootVal());
+$r->middleShow();
 
-var_dump($r);
+echo "\n";
+
+$r->rearShow();
